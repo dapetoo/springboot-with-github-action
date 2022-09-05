@@ -34,19 +34,19 @@ jobs:
       - name: Build with Maven
         run: mvn -B package -DskipTests --file pom.xml
       # #Run Tests
-      # - name: Run Tests
-      #   run: mvn -B test
-      # - name: Build and analyze
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
-      #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      #   run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=dapetoo_springboot-with-github-action
+      - name: Run Tests
+        run: mvn -B test
+      - name: Build and analyze
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=dapetoo_springboot-with-github-action
       #Build the application using Maven
-      - name: Upload JAR
+      - name: Upload artifact for deployment job
         #This uploads artifacts from your workflow allowing you to share data between jobs and store data once a workflow is complete.
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           #Set artifact name
-          name: artifact
+          name: java-app
           #From this path
-          path: target/data-0.0.1-SNAPSHOT.jar
+          path: '${{ github.workspace }}/target/*.jar'
