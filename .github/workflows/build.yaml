@@ -62,7 +62,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           #Set artifact name
-          name: java-app
+          name: artifact
           #From this path
           path: /target/data-0.0.1-SNAPSHOT.jar
 
@@ -71,12 +71,10 @@ jobs:
     name: deployment
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
       - name: Download the jar file
-      #Download the jar file from build
         uses: actions/download-artifact@v2
         with:
-          name: java-app
+          name: artifact
 
       - name: Deploy to EB
         uses: einaregilsson/beanstalk-deploy@v20
