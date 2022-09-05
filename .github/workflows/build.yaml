@@ -57,6 +57,7 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=dapetoo_springboot-with-github-action
       #Build the application using Maven
+      - run: mkdir -p /target/*.jar
       - name: Upload artifact for deployment job
         #This uploads artifacts from your workflow allowing you to share data between jobs and store data once a workflow is complete.
         uses: actions/upload-artifact@v3
@@ -64,7 +65,7 @@ jobs:
           #Set artifact name
           name: java-app
           #From this path
-          path: "${{ github.workspace }}/target/*.jar"
+          path: /target/data-0.0.1-SNAPSHOT.jar
 
   deploy:
     needs: build
@@ -78,9 +79,6 @@ jobs:
         with:
           name: java-app
 
-      - name: Generate deployment package
-        run: zip -r deploy.zip -i "/home/runner/work/springboot-with-github-action/springboot-with-github-action/target/*.jar"
-
       - name: Deploy to EB
         uses: einaregilsson/beanstalk-deploy@v20
         with:
@@ -91,5 +89,5 @@ jobs:
           environment_name: SpringBootApplication-env
           version_label: ${{github.SHA}}
           region: us-east-1
-          deployment_package: deploy.zip
+          deployment_package: data-0.0.1-SNAPSHOT.jar
 
