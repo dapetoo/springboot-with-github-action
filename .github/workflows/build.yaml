@@ -77,6 +77,10 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: java-app
+
+      - name: Generate deployment package
+        run: zip -r deploy.zip ${{ github.workspace }}/target/*.jar
+
       - name: Deploy to EB
         uses: einaregilsson/beanstalk-deploy@v20
         with:
@@ -87,5 +91,5 @@ jobs:
           environment_name: SpringBootApplication-env
           version_label: ${{github.SHA}}
           region: us-east-1
-          deployment_package: java-app.jar
+          deployment_package: deploy.zip
 
