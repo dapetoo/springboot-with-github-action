@@ -65,3 +65,17 @@ jobs:
           name: java-app
           #From this path
           path: "${{ github.workspace }}/target/*.jar"
+
+  deploy:
+    needs: build
+    name: deployment
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Download the jar file
+      #Download the jar file from build
+        uses: actions/download-artifact@v2
+        with:
+          name: artifact
+
+
