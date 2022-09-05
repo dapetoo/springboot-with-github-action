@@ -87,5 +87,5 @@ jobs:
           environment_name: SpringBootApplication-env
           version_label: ${{github.SHA}}
           region: us-east-1
-          deployment_package: java-app.zip
+          deployment_package: java-app
 
