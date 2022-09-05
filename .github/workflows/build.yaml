@@ -79,7 +79,7 @@ jobs:
           name: java-app
 
       - name: Generate deployment package
-        run: zip -r deploy.zip -i ${{ github.workspace }}/target/*.jar
+        run: zip -r deploy.zip -i "${{ github.workspace }}/target/*.jar"
 
       - name: Deploy to EB
         uses: einaregilsson/beanstalk-deploy@v20
