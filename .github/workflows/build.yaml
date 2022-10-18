@@ -1,5 +1,5 @@
 #Workflow name
-name: CI/CD Pipeline
+name: CI/CD Pipeline for Java
 on:
   #Manually trigger workflow runs
   #workflow_dispatch:
