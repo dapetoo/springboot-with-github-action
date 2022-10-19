@@ -11,7 +11,7 @@ on:
 jobs:
   #Test's job 
   tests:
-    if: "contains(github.event.head_commit.message, '[test]')"
+    if: "contains(github.event.head_commit.message, 'test')"
     name: Unit tests
     #Run on Ubuntu using the latest version
     runs-on: ubuntu-latest
@@ -38,7 +38,7 @@ jobs:
       # #Run Tests
       - name: Run Tests
         run: mvn -B test
-        
+
 
   #Test's job
   build:
