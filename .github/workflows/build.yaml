@@ -11,7 +11,7 @@ on:
 jobs:
   #Test's job 
   tests:
-    if: "contains(github.event.head_commit.message, 'test')"
+    #if: "contains(github.event.head_commit.message, 'test')"
     name: Unit tests
     #Run on Ubuntu using the latest version
     runs-on: ubuntu-latest
@@ -26,6 +26,7 @@ jobs:
           java-version: "11"
       #Set up Maven cache
       - name: Cache Maven packages
+        if: contains(github.event.head_commit.message, 'test')
         #This action allows caching dependencies and build outputs to improve workflow execution time.
         uses: actions/cache@v1
         with:
