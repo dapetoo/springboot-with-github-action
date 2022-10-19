@@ -11,6 +11,7 @@ on:
     paths-ignore:
       - '*.md'
       - '.github/docs/**'
+      - '.mvn/**'
 jobs:
   #Test's job 
   tests:
