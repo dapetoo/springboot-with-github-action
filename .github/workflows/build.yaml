@@ -11,7 +11,7 @@ on:
 jobs:
   #Test's job 
   tests:
-    if: "contains(github.event.head_commit.message, '[build]')"
+    # if: "contains(github.event.head_commit.message, '[build]')"
     name: Unit tests
     #Run on Ubuntu using the latest version
     runs-on: ubuntu-latest
@@ -69,10 +69,10 @@ jobs:
           path: /target/data-0.0.1-SNAPSHOT.jar
 
   deploy:
-    needs: build
+    # needs: build
     name: deployment
     runs-on: ubuntu-latest
-    if: "contains(github.event.head_commit.message, '[deploy]')"
+    # if: "contains(github.event.head_commit.message, '[deploy]')"
     steps:
       - name: Download the jar file
         uses: actions/download-artifact@v2
