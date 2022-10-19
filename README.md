@@ -1,0 +1,1 @@
+Testing path ignore in GitHub action
