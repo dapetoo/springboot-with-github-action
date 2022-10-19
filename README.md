@@ -1,1 +1,3 @@
-Testing path ignore in GitHub action
+Testing path ignore in GitHub action 
+
+Should not trigger the workflow
