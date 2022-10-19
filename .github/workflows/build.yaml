@@ -62,6 +62,7 @@ jobs:
         run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=dapetoo_springboot-with-github-action
       #Build the application using Maven
       - name: Upload artifact for deployment job
+        if: contains(github.event.head_commit.message, '[deploy]')
         #This uploads artifacts from your workflow allowing you to share data between jobs and store data once a workflow is complete.
         uses: actions/upload-artifact@v3
         with:
