@@ -68,26 +68,30 @@ jobs:
           #From this path
           path: /target/data-0.0.1-SNAPSHOT.jar
 
-  deploy:
-    # needs: build
-    name: deployment
+  deployment:
+    name: Deployment
+    #Run on Ubuntu using the latest version
     runs-on: ubuntu-latest
-    # if: "contains(github.event.head_commit.message, '[deploy]')"
+    #Job's steps
     steps:
-      - name: Download the jar file
-        uses: actions/download-artifact@v2
+      #Check-out your repository under $GITHUB_WORKSPACE, so your workflow can access it
+      - uses: actions/checkout@v1
+      #Set up JDK 11
+      - name: Set up JDK
+        uses: actions/setup-java@v1
         with:
+          java-version: "11"
+      - name: Build and analyze
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=dapetoo_springboot-with-github-action
+      #Build the application using Maven
+      - name: Upload artifact for deployment job
+        #This uploads artifacts from your workflow allowing you to share data between jobs and store data once a workflow is complete.
+        uses: actions/upload-artifact@v3
+        with:
+          #Set artifact name
           name: artifact
-
-      - name: Deploy to EB
-        uses: einaregilsson/beanstalk-deploy@v20
-        with:
-          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          use_existing_version_if_available: false
-          application_name: SpringBootApplication
-          environment_name: SpringBootApplication-env
-          version_label: ${{github.SHA}}
-          region: us-east-1
-          deployment_package: data-0.0.1-SNAPSHOT.jar
-
+          #From this path
+          path: /target/data-0.0.1-SNAPSHOT.jar
